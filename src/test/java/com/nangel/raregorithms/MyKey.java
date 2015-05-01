@@ -1,4 +1,4 @@
-package com.nangel.algoritmos;
+package com.nangel.raregorithms;
 
 /**
  * Created by nangel on 1/5/15.

@@ -1,19 +1,12 @@
-package com.nangel.algoritmos;
-
-import com.sun.xml.internal.ws.util.QNameMap;
-
-import java.util.*;
+package com.nangel.raregorithms;
 
 /**
  * Created by nangel on 1/5/15.
  */
 public final class IntegerRepeatedValueMap<K,V> extends AbstractRepeatedValueMap<K,V,Integer>{
 
-    public final Integer nextValue() {
-        Integer integer = super.nextValue();
-        if(integer!=null){
-            return integer;
-        }
+    @Override
+    protected final Integer internalNextValue() {
         if(lastValue==null){
             return 1;
         }
@@ -21,8 +14,7 @@ public final class IntegerRepeatedValueMap<K,V> extends AbstractRepeatedValueMap
     }
 
     @Override
-    public final void clear() {
-        super.clear();
+    public final void internalClear() {
         lastValue = 0;
     }
 

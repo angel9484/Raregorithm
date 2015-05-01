@@ -1,4 +1,4 @@
-package com.nangel.algoritmos;
+package com.nangel.raregorithms;
 
 import java.util.*;
 
@@ -31,12 +31,14 @@ public abstract class AbstractRepeatedValueMap<K,V,N> implements RepeatedValueMa
         return null;
     }
 
-    public N nextValue() {
+    private N nextValue() {
         if(!freePositions.isEmpty()){
             return freePositions.pop();
         }
-        return null;
+        return internalNextValue();
     }
+
+    protected abstract N internalNextValue();
 
     public V put(final K key,final V value){
         N mappingKey = nextValue();
@@ -77,10 +79,13 @@ public abstract class AbstractRepeatedValueMap<K,V,N> implements RepeatedValueMa
         }
     }
 
-    public void clear() {
+    public final void clear() {
         keys.clear();
         values.clear();
+        internalClear();
     }
+
+    protected abstract void internalClear();
 
     public Set<K> keySet() {
         return keys.keySet();
@@ -98,5 +103,24 @@ public abstract class AbstractRepeatedValueMap<K,V,N> implements RepeatedValueMa
             entrySet.add(new AbstractMap.SimpleImmutableEntry<K, V>(k,v));
         }
         return entrySet;
+    }
+
+    public List<K> getKeys(V value) {
+        N index = null;
+        for(Entry<N,V> valueN : values.entrySet()){
+            if(valueN.getValue().equals(value)){
+                index = valueN.getKey();
+                break;
+            }
+        }
+        List<K> keysToReturn = new ArrayList<K>();
+        if(index!=null){
+            for(Entry<K,N> keyN : keys.entrySet()){
+                if(keyN.getValue().equals(index)){
+                    keysToReturn.add(keyN.getKey());
+                }
+            }
+        }
+        return keysToReturn;
     }
 }
