@@ -1,7 +1,5 @@
 package com.nangel.raregorithms;
 
-import com.sun.istack.internal.NotNull;
-
 import java.util.*;
 
 /**
@@ -75,7 +73,6 @@ public abstract class AbstractRepeatedValueMap<K,V,N> implements RepeatedValueMa
         return null;
     }
 
-    @NotNull
     public void putAll(Map<? extends K, ? extends V> m) {
         for(Entry<? extends K, ? extends V> next : m.entrySet()){
             put(next.getKey(),next.getValue());
@@ -90,17 +87,14 @@ public abstract class AbstractRepeatedValueMap<K,V,N> implements RepeatedValueMa
 
     protected abstract void internalClear();
 
-    @NotNull
     public Set<K> keySet() {
         return keys.keySet();
     }
 
-    @NotNull
     public Collection<V> values() {
         return values.values();
     }
 
-    @NotNull
     public Set<Entry<K, V>> entrySet() {
         Set<Entry<K,V>> entrySet = new HashSet<Entry<K, V>>();
         for(Entry<K,N> key : keys.entrySet()){
