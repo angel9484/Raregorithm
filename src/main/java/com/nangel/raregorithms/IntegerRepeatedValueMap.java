@@ -1,8 +1,5 @@
 package com.nangel.raregorithms;
 
-/**
- * Created by nangel on 1/5/15.
- */
 public final class IntegerRepeatedValueMap<K,V> extends AbstractRepeatedValueMap<K,V,Integer>{
 
     @Override
@@ -14,11 +11,11 @@ public final class IntegerRepeatedValueMap<K,V> extends AbstractRepeatedValueMap
     }
 
     @Override
-    public final void internalClear() {
+    protected final void internalClear() {
         lastValue = 0;
     }
 
     public final int size() {
-        return lastValue;
+        return lastValue + super.size();
     }
 }

@@ -1,5 +1,7 @@
 package com.nangel.raregorithms;
 
+import com.sun.istack.internal.NotNull;
+
 import java.util.*;
 
 /**
@@ -8,8 +10,8 @@ import java.util.*;
 public abstract class AbstractRepeatedValueMap<K,V,N> implements RepeatedValueMap<K,V,N>{
     private final Map<K,N> keys = new HashMap<K, N>();
     private final Map<N,V> values = new HashMap<N, V>();
+    private final Stack<N> freePositions = new Stack<N>();
     protected N lastValue;
-    Stack<N> freePositions = new Stack<N>();
 
     public boolean isEmpty() {
         return keys.isEmpty();
@@ -73,6 +75,7 @@ public abstract class AbstractRepeatedValueMap<K,V,N> implements RepeatedValueMa
         return null;
     }
 
+    @NotNull
     public void putAll(Map<? extends K, ? extends V> m) {
         for(Entry<? extends K, ? extends V> next : m.entrySet()){
             put(next.getKey(),next.getValue());
@@ -87,14 +90,17 @@ public abstract class AbstractRepeatedValueMap<K,V,N> implements RepeatedValueMa
 
     protected abstract void internalClear();
 
+    @NotNull
     public Set<K> keySet() {
         return keys.keySet();
     }
 
+    @NotNull
     public Collection<V> values() {
         return values.values();
     }
 
+    @NotNull
     public Set<Entry<K, V>> entrySet() {
         Set<Entry<K,V>> entrySet = new HashSet<Entry<K, V>>();
         for(Entry<K,N> key : keys.entrySet()){
@@ -103,6 +109,10 @@ public abstract class AbstractRepeatedValueMap<K,V,N> implements RepeatedValueMa
             entrySet.add(new AbstractMap.SimpleImmutableEntry<K, V>(k,v));
         }
         return entrySet;
+    }
+
+    public int size() {
+        return -freePositions.size();
     }
 
     public List<K> getKeys(V value) {
